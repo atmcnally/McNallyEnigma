@@ -12,6 +12,8 @@ public class McNallyEnigma {
 		Scanner userIn = new Scanner(System.in);
 		String input = "";
 		String phrase = "";
+		int n;
+		String num = "";
 		
 		while(!(input.equals("quit"))) {
 			encrypted = "";
@@ -20,14 +22,16 @@ public class McNallyEnigma {
 			input = userIn.nextLine();
 			Scanner inputScan = new Scanner(input);
 			word = inputScan.next();
+			num = inputScan.next();
 			
-			if(word.equalsIgnoreCase("encrypt:")) {
+			n = Integer.parseInt(num.substring(0, num.length() - 1));
+			if(word.equalsIgnoreCase("encrypt")) {
 				while(inputScan.hasNext()) {
-					phrase = phrase + encrypt(inputScan) + " ";
+					phrase = phrase + encrypt(inputScan, n) + " ";
 				}
-			} else if(word.equalsIgnoreCase("decrypt:")) {
+			} else if(word.equalsIgnoreCase("decrypt")) {
 				while(inputScan.hasNext()) {
-					phrase = phrase + decrypt(inputScan) + " ";
+					phrase = phrase + decrypt(inputScan, n) + " ";
 				}
 			} else if(word.equalsIgnoreCase("quit")) {
 				userIn.close();
@@ -36,14 +40,15 @@ public class McNallyEnigma {
 		}
 	}
 	
-	public static String encrypt(Scanner inputScan) {
+	public static String encrypt(Scanner inputScan, int n) {
 		encrypted = "";
 		word = inputScan.next();
 		for(int i = 0; i < word.length(); i++){
-			if(word.charAt(i) == 'z' || word.charAt(i) == 'Z') {
-				x = word.charAt(i) - 25;
-			} else {
-				x = word.charAt(i) + 1;
+			x = word.charAt(i) + n;
+			//if(Character.isUpperCase(x) && (((x + n) > 90))) {
+			//x = x - 26 + n;
+			if(((x <= 90) && ((x) > 90)) || ((x >= 97) && ((x) > 122))) {
+				x = x - 26 + n;
 			}
 			c = (char) x;
 			encrypted += c;
@@ -51,14 +56,14 @@ public class McNallyEnigma {
 		return encrypted;
 	}
 	
-	public static String decrypt(Scanner inputScan) {
+	public static String decrypt(Scanner inputScan, int n) {
 		decrypted = "";
 		word = inputScan.next();
 		for(int i = 0; i < word.length(); i++){
 			if(word.charAt(i) == 'a' || word.charAt(i) == 'A') {
 				x = word.charAt(i) + 25;
 			} else {
-				x = word.charAt(i) - 1;
+				x = word.charAt(i) - n;
 			}
 			c = (char) x;
 			decrypted += c;
