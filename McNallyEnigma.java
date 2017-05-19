@@ -22,18 +22,30 @@ public class McNallyEnigma {
 			input = userIn.nextLine();
 			Scanner inputScan = new Scanner(input);
 			word = inputScan.next();
-			num = inputScan.next();
 			
-			n = Integer.parseInt(num.substring(0, num.length() - 1));
-			if(word.equalsIgnoreCase("encrypt")) {
-				while(inputScan.hasNext()) {
-					phrase = phrase + encrypt(inputScan, n) + " ";
+			if(word.equalsIgnoreCase("encrypt") || word.equalsIgnoreCase("decrypt")) {
+				num = inputScan.next();
+				n = Integer.parseInt(num.substring(0, num.length() - 1));
+				
+				if(word.equalsIgnoreCase("encrypt")) {
+					while(inputScan.hasNext()) {
+						phrase = phrase + encrypt(inputScan, n) + " ";
+					}
+				} else if(word.equalsIgnoreCase("decrypt")) {
+					while(inputScan.hasNext()) {
+						phrase = phrase + decrypt(inputScan, n) + " ";
+					}
 				}
-			} else if(word.equalsIgnoreCase("decrypt")) {
+			} else if(word.equalsIgnoreCase("encrypt:")) {
 				while(inputScan.hasNext()) {
-					phrase = phrase + decrypt(inputScan, n) + " ";
+					phrase = phrase + encrypt(inputScan, 1) + " ";
+				}
+			} else if(word.equalsIgnoreCase("decrypt:")) {
+				while(inputScan.hasNext()) {
+					phrase = phrase + decrypt(inputScan, 1) + " ";
 				}
 			} else if(word.equalsIgnoreCase("quit")) {
+			
 				userIn.close();
 			}
 			System.out.println(phrase);
