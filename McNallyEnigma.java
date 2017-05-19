@@ -45,10 +45,8 @@ public class McNallyEnigma {
 		word = inputScan.next();
 		for(int i = 0; i < word.length(); i++){
 			x = word.charAt(i) + n;
-			//if(Character.isUpperCase(x) && (((x + n) > 90))) {
-			//x = x - 26 + n;
-			if(((x <= 90) && ((x) > 90)) || ((x >= 97) && ((x) > 122))) {
-				x = x - 26 + n;
+			if((Character.isUpperCase(word.charAt(i)) && ((x) > 90)) || (Character.isLowerCase(word.charAt(i)) && ((x) > 122))) {
+				x = word.charAt(i) - 26 + n;
 			}
 			c = (char) x;
 			encrypted += c;
@@ -60,10 +58,9 @@ public class McNallyEnigma {
 		decrypted = "";
 		word = inputScan.next();
 		for(int i = 0; i < word.length(); i++){
-			if(word.charAt(i) == 'a' || word.charAt(i) == 'A') {
-				x = word.charAt(i) + 25;
-			} else {
-				x = word.charAt(i) - n;
+			x = word.charAt(i) - n;
+			if((Character.isUpperCase(word.charAt(i)) && ((x) < 65)) || (Character.isLowerCase(word.charAt(i)) && ((x) < 97))) {
+				x = word.charAt(i) + 26 - n;
 			}
 			c = (char) x;
 			decrypted += c;
