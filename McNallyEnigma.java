@@ -1,3 +1,6 @@
+
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class McNallyEnigma {
@@ -15,13 +18,19 @@ public class McNallyEnigma {
 		int n;
 		String num = "";
 		
+		//sets up affine maps
+		AffineCipher affineMap = new AffineCipher();
+		affineMap.alphaSwitch();
+		
 		while(!(input.equals("quit"))) {
 			encrypted = "";
 			decrypted = "";
 			phrase = "";
 			input = userIn.nextLine();
 			Scanner inputScan = new Scanner(input);
+			//word is the first "next" inputed
 			word = inputScan.next();
+			
 			
 			if(word.equalsIgnoreCase("encrypt") || word.equalsIgnoreCase("decrypt")) {
 				num = inputScan.next();
@@ -44,7 +53,19 @@ public class McNallyEnigma {
 				while(inputScan.hasNext()) {
 					phrase = phrase + decrypt(inputScan, 1) + " ";
 				}
-			} else if(word.equalsIgnoreCase("quit")) {
+			} else if(word.equalsIgnoreCase("affineencrypt:")) {
+				System.out.println(Arrays.toString(affineMap.newLMap));
+				while(inputScan.hasNext()) {
+					phrase = phrase + aEncrypt(inputScan, affineMap) + " ";
+				}
+				
+			} else if (word.equalsIgnoreCase("affinedecrypt:")) {
+				System.out.println(Arrays.toString(affineMap.newLMap));
+				while(inputScan.hasNext()) {
+					phrase = phrase + aDecrypt(inputScan, affineMap) + " ";
+				}
+			}
+			else if(word.equalsIgnoreCase("quit")) {
 			
 				userIn.close();
 			}
@@ -79,6 +100,37 @@ public class McNallyEnigma {
 		}
 		return decrypted;
 		
+	}
+	
+	public static String aEncrypt(Scanner inputScan, AffineCipher affineMap) {
+		encrypted = "";
+		word = inputScan.next();
+		for(int i = 0; i < word.length(); i++){
+			x = word.charAt(i) + 0;
+			x = affineMap.newLMap[x];
+			c = (char) x;
+			encrypted += c;
+		}
+		return encrypted;
+	}
+	
+	public static String aDecrypt(Scanner inputScan, AffineCipher affineMap) {
+		decrypted = "";
+		word = inputScan.next();
+		for(int i = 0; i < word.length(); i++){
+			x = word.charAt(i) + 0;
+			
+			int k = 0;
+			while (affineMap.newLMap[k] != x) {
+				k++;
+			}
+			
+			x = k;
+			
+			c = (char) x;
+			decrypted += c;
+		}
+		return decrypted;
 	}
 	
 }
