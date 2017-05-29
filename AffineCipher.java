@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class AffineCipher {
@@ -8,31 +9,42 @@ public class AffineCipher {
 	//sets up before any input made
 	//independent of messages
 	
+	public static int[] newLMap = new int[123];
+	
 	//this preserves which letters are upper or lowercase
-	public static void alphaSwitch(int n) {
-		String newLetterMap = "";
-		ArrayList<Character> newLMap = new ArrayList<Character>();
-		int[] newLMap = new int[122];
+	public static void alphaSwitch() {
+		ArrayList<Integer> alphaList = new ArrayList<>();
 		
-		if(n >= 65 && n <= 90) {
-			//is uppercase
-			for(int i = 65; i <= 90; i++) {
-				Random ran = new Random();
-				int x = ran.nextInt(90) + 65;
-				
-				if(newLMap.get(i).equals(null)) {
-					//write letter to space in array
-					newLMap[i]
-				} else {
-					//find next blank space for letter
-					x = ran.nextInt(90) + 65;
-				}
-			}
-			
-		} else if(n >= 97 && n <= 122) {
-			//is lowercase
-			
-			
+		//add uppercase nums
+		for(int j = 65; j <= 90; j++) {
+			alphaList.add(j);
 		}
+		
+		//add lowercase nums
+		for(int j = 97; j <= 122; j++) {
+			alphaList.add(j);
+		}
+		
+		Collections.shuffle(alphaList);
+		
+		int count = 0;
+		//is uppercase
+		for(int i = 65; i <= 90; i++) {
+			//write letter to space in array
+			newLMap[i] = alphaList.get(count);
+			//-65
+			count++;
+		}
+			
+		//is lowercase
+		for(int i = 97; i <= 122; i++) {
+			//write letter to space in array
+			newLMap[i] = alphaList.get(count);
+			//-70
+			count++;
+		}
+			
+	
 	}
 }
+
