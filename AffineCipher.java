@@ -9,6 +9,15 @@ public class AffineCipher {
 	//sets up before any input made
 	//independent of messages
 	
+	public static int[] letterMap = new int[26];
+	
+	public static void createAffineMap() {
+		String letterMap1 = "QWERTYUIOPASDFGHJKLZXCVBNM";
+		for(int i = 0; i < 26; i++) {
+			letterMap[i] = (int) letterMap1.charAt(i);
+		}
+	}
+	
 	public static int[] newLMap = new int[123];
 	
 	//this preserves which letters are upper or lowercase
@@ -25,6 +34,8 @@ public class AffineCipher {
 			alphaList.add(j);
 		}
 		
+		
+		//repeat this part onward for multiple ciphers
 		Collections.shuffle(alphaList);
 		
 		int count = 0;
