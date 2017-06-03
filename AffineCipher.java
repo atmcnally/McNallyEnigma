@@ -11,10 +11,13 @@ public class AffineCipher {
 	
 	public static int[] letterMap = new int[26];
 	
-	public static void createAffineMap() {
+	public static void createAffineMap(String theLetterMap) {
 		String letterMap1 = "QWERTYUIOPASDFGHJKLZXCVBNM";
+		String letterMap2 = "ZAQWSXCDERFVBGTYHNMJUIKLOP";
+		String letterMap3 = "QPWOEIRUTYALSKDJFHGZMXNCBV";
+		
 		for(int i = 0; i < 26; i++) {
-			letterMap[i] = (int) letterMap1.charAt(i);
+			letterMap[i] = (int) theLetterMap.charAt(i);
 		}
 	}
 	
