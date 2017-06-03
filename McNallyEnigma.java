@@ -1,5 +1,3 @@
-
-
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -18,10 +16,13 @@ public class McNallyEnigma {
 		int n;
 		String num = "";
 		
+		String letterMap1 = "QWERTYUIOPASDFGHJKLZXCVBNM";
+		String letterMap2 = "ZAQWSXCDERFVBGTYHNMJUIKLOP";
+		String letterMap3 = "QPWOEIRUTYALSKDJFHGZMXNCBV";
+		
 		//sets up affine maps
 		AffineCipher affineMap = new AffineCipher();
 		affineMap.alphaSwitch();
-		affineMap.createAffineMap();
 		
 		while(!(input.equals("quit"))) {
 			encrypted = "";
@@ -66,16 +67,66 @@ public class McNallyEnigma {
 					phrase = phrase + aaDecrypt(inputScan, affineMap) + " ";
 				}
 			} else if(word.equalsIgnoreCase("affineencrypt:")) {
+				affineMap.createAffineMap(letterMap1);
 				System.out.println(Arrays.toString(affineMap.letterMap));
 				while(inputScan.hasNext()) {
 					phrase = phrase + aEncrypt(inputScan, affineMap) + " ";
 				}
 				
 			} else if (word.equalsIgnoreCase("affinedecrypt:")) {
+				affineMap.createAffineMap(letterMap1);
 				System.out.println(Arrays.toString(affineMap.letterMap));
 				while(inputScan.hasNext()) {
 					phrase = phrase + aDecrypt(inputScan, affineMap) + " ";
 				}
+			} else if(word.equalsIgnoreCase("rotorencrypt:")) {
+				
+				affineMap.createAffineMap(letterMap1);
+				System.out.println(Arrays.toString(affineMap.letterMap));
+				while(inputScan.hasNext()) {
+					phrase = phrase + aEncrypt(inputScan, affineMap) + " ";
+				}
+				
+				Scanner thisLine = new Scanner(phrase);
+				affineMap.createAffineMap(letterMap2);
+				System.out.println(Arrays.toString(affineMap.letterMap));
+				phrase = "";
+				while(thisLine.hasNext()) {
+					phrase = phrase + aEncrypt(thisLine, affineMap) + " ";
+				}
+				
+				Scanner thisNextLine = new Scanner(phrase);
+				affineMap.createAffineMap(letterMap3);
+				System.out.println(Arrays.toString(affineMap.letterMap));
+				phrase = "";
+				while(thisNextLine.hasNext()) {
+					phrase = phrase + aEncrypt(thisNextLine, affineMap) + " ";
+				}
+				
+			} else if (word.equalsIgnoreCase("rotordecrypt:")) {
+
+				affineMap.createAffineMap(letterMap3);
+				System.out.println(Arrays.toString(affineMap.letterMap));
+				while(inputScan.hasNext()) {
+					phrase = phrase + aDecrypt(inputScan, affineMap) + " ";
+				}
+				
+				Scanner thisLine = new Scanner(phrase);
+				affineMap.createAffineMap(letterMap2);
+				System.out.println(Arrays.toString(affineMap.letterMap));
+				phrase = "";
+				while(thisLine.hasNext()) {
+					phrase = phrase + aDecrypt(thisLine, affineMap) + " ";
+				}
+				
+				Scanner thisNextLine = new Scanner(phrase);
+				affineMap.createAffineMap(letterMap1);
+				System.out.println(Arrays.toString(affineMap.letterMap));
+				phrase = "";
+				while(thisNextLine.hasNext()) {
+					phrase = phrase + aDecrypt(thisNextLine, affineMap) + " ";
+				}
+				
 			} else if(word.equalsIgnoreCase("quit")) {
 			
 				userIn.close();
@@ -164,6 +215,7 @@ public class McNallyEnigma {
 		}
 		return decrypted;
 	}
+	
 	
 	public static String aaEncrypt(Scanner inputScan, AffineCipher affineMap) {
 		encrypted = "";
