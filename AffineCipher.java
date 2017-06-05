@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+//Angelus McNally
+//AP Comp Sci P1
+//Enigma Project
+
 public class AffineCipher {
 	//given abcdefghijklmnopqrstuvwxyz or ABCDEFGHIJKLMNOPQRSTUVWXYZ
 	//shuffle the letters each time the program is run

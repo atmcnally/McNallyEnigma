@@ -1,6 +1,10 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
+//Angelus McNally
+//AP Comp Sci P1
+//Enigma Project
+
 public class McNallyEnigma {
 
 	private static int x;
@@ -127,6 +131,9 @@ public class McNallyEnigma {
 					phrase = phrase + aDecrypt(thisNextLine, affineMap) + " ";
 				}
 				
+			} else if(input.contains("I") || input.contains("V")) {
+				PhaseTwo.parseInput(input.toUpperCase(), inputScan, word.toUpperCase());
+			
 			} else if(word.equalsIgnoreCase("quit")) {
 			
 				userIn.close();
