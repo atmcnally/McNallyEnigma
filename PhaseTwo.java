@@ -6,6 +6,7 @@ import java.util.Scanner;
 //Enigma Project
 
 //HEY YOU!!!! CHANGE SOME OF THESE FIELDS TO PRIVATE!!! ACCESSOR METHODS!!!!!!
+///I II III A A Z ABC
 
 public class PhaseTwo {
 	public static int leftRotorNum = 0;
@@ -186,10 +187,13 @@ public class PhaseTwo {
 			
 			
 			//takes char at index i, gets ascii value
-			x = word.charAt(i) + 0;
+			x = word.charAt(i) + rightRotor.rotorPosition;
+			
+			System.out.println((char) x);
 			
 			//convert this char ascii value to an index in the standard alphabet map
 			ind = x - 65;
+			System.out.println(ind);
 			
 			//get the char value of the rotorMap at that index ind
 			ch = rightRotor.rotorMap.charAt(ind);
