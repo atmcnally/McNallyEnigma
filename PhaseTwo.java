@@ -88,38 +88,108 @@ public class PhaseTwo {
 		int ind = -1;
 		
 		//l is the last char for the encryption, it is added to the string encrypted that is returned
-		char l = 'a';
+		char l = '-';
 		
 		//ch changes throughout the rotors and is the char at the index indicated by the previous/next rotor
-		char ch = 'a';
+		char ch = '-';
 		
 		//SHOULD I CHANGE THESE CONVOLUTED CHANGING VARIABLES TO JUST OLD CHAR AND NEW CHAR THEN SWITCH AND END OF EACH ROTOR?
 		
-		for(int i = 0; i < word.length(); i++){
-			
-			//takes first char at gets in value
-			x = word.charAt(i) + 0;
-			
-			//convert this char ascii value to an index in the alphabet
-			ind = x - 65;
+		rightRotor.rotorPosition++;
+		
+		if(rightRotor.rotorPosition == 26) {
+			rightRotor.rotorPosition = 0;
+			if(middleRotor.rotorPosition == 25) {
+				middleRotor.rotorPosition = 0;
+				if(leftRotor.rotorPosition == 25) {
+					leftRotor.rotorPosition = 0;
+				}
+			}
+		}
+		
+		char firstL = '-';
+		
+		for(int j = 0; j < rightRotor.rotorPosition; j++) {
+			firstL = rightRotor.rotorMap.charAt(0);
+			rightRotor.rotorMap = rightRotor.rotorMap.substring(1);
+			rightRotor.rotorMap += firstL;
+		}
+		System.out.println(rightRotor.rotorMap);
+		
+		for(int j = 0; j < middleRotor.rotorPosition; j++) {
+			firstL = middleRotor.rotorMap.charAt(0);
+			middleRotor.rotorMap = middleRotor.rotorMap.substring(1);
+			middleRotor.rotorMap += firstL;
+		}
+		System.out.println(middleRotor.rotorMap);
+		
+		for(int j = 0; j < leftRotor.rotorPosition; j++) {
+			firstL = leftRotor.rotorMap.charAt(0);
+			leftRotor.rotorMap = leftRotor.rotorMap.substring(1);
+			leftRotor.rotorMap += firstL;
+		}
+		System.out.println(leftRotor.rotorMap);
+		
+		//cool, now your rotors know what positions they should be at and are kicked if needed
+		
+		for(int i = 0; i < word.length(); i++) {
 			
 			//advance the right rotor forward 1
 			//if at end, loop back to start and kick next rotor
 			//check that middle and left don't need to be kicked
 			//double kicking??
+		
+			//time to reset their alphabets
+			//shift the lettermap by however many positions
+			//for rotor 3, setting of a means that a char fed in with the ascii - 65 value of 0 matches to the char at the map's index of 0
 			
-			rightRotor.rotorPosition++;
+			//b is at index zero. with a position shift of 1 -so that the initial setting is b- the whole letter map is shifted back 1 value
+			//what was at index 1 goes to index 0
+			//index 0 goes to index 25
+			//basically, take the char at the front and move it to the end, on a loop
 			
-			if(rightRotor.rotorPosition == 26 && middleRotor.rotorPosition == 25) {
-				if(leftRotor.rotorPosition == 25) {
-					leftRotor.rotorPosition = 0;
-				} else {
-					middleRotor.rotorPosition = 0;
+			//do this the first time for the number of positions, then shift just once for each rotation
+			
+			//ONLY THE FIRST ROTOR ROTATES MOST OF THE TIME, ONLY ROTATE THE OTHERS IF THE IF STATEMENTS ABOVE APPLY
+			
+			if(i > 0) {
+				rightRotor.rotorPosition++;
+			
+				if(rightRotor.rotorPosition == 26) {
 					rightRotor.rotorPosition = 0;
+					
+					if(middleRotor.rotorPosition == 25) {
+						middleRotor.rotorPosition = 0;
+						firstL = middleRotor.rotorMap.charAt(0);
+						middleRotor.rotorMap = middleRotor.rotorMap.substring(1);
+						middleRotor.rotorMap += firstL;
+						System.out.println(middleRotor.rotorMap);
+						
+						if(leftRotor.rotorPosition == 25) {
+							leftRotor.rotorPosition = 0;
+							firstL = leftRotor.rotorMap.charAt(0);
+							leftRotor.rotorMap = leftRotor.rotorMap.substring(1);
+							leftRotor.rotorMap += firstL;
+							System.out.println(leftRotor.rotorMap);
+						}
+					}
 				}
+				
+				firstL = rightRotor.rotorMap.charAt(0);
+				rightRotor.rotorMap = rightRotor.rotorMap.substring(1);
+				rightRotor.rotorMap += firstL;
+				System.out.println(rightRotor.rotorMap);
 			}
 			
+			
 			System.out.println(leftRotor.rotorPosition + " " + middleRotor.rotorPosition + " " + rightRotor.rotorPosition);
+			
+			
+			//takes char at index i, gets ascii value
+			x = word.charAt(i) + 0;
+			
+			//convert this char ascii value to an index in the standard alphabet map
+			ind = x - 65;
 			
 			//get the char value of the rotorMap at that index ind
 			ch = rightRotor.rotorMap.charAt(ind);
@@ -143,13 +213,12 @@ public class PhaseTwo {
 			//x is the int value (in ascii) of the char hitting the reflector
 			//find the char at that index
 			ch = reflector.charAt(ind);
+			System.out.println(ch);
 			
 			//take that char ch and bounce it back into the leftRotor
 			//find that int within the rotor's lettermap
 			ind = leftRotor.rotorMap.indexOf(ch);
-			System.out.println(ch);
-			
-			
+
 			//find corresponding char for that index
 			//if the ch is t, then the index of it for rotor one is 11. 
 			//i want the index + 65, converted to char. that is the char to be fed into the next rotor
@@ -159,15 +228,21 @@ public class PhaseTwo {
 			
 			//convert index to regular ascii value
 			ch = (char) (ind + 65);
+			System.out.println(ch);
 			
 			//take this char and find it in the next rotor
 			ind = middleRotor.rotorMap.indexOf(ch);
-			
 			//repeat this for the next two rotors
 			
+			ch = (char) (ind + 65);
+			System.out.println(ch);
 			
+			ind = rightRotor.rotorMap.indexOf(ch);
+			ch = (char) (ind + 65);
+			System.out.println(ch);
 			
-			l = (char) x;
+			//char x
+			l = ch;
 			encrypted += l;
 		}
 		return encrypted;
