@@ -44,20 +44,20 @@ public class McNallyEnigma {
 				
 				if(word.equalsIgnoreCase("encrypt")) {
 					while(inputScan.hasNext()) {
-						phrase = phrase + encrypt(inputScan, n) + " ";
+						phrase = phrase + basicEncrypt(inputScan, n) + " ";
 					}
 				} else if(word.equalsIgnoreCase("decrypt")) {
 					while(inputScan.hasNext()) {
-						phrase = phrase + decrypt(inputScan, n) + " ";
+						phrase = phrase + basicDecrypt(inputScan, n) + " ";
 					}
 				}
 			} else if(word.equalsIgnoreCase("encrypt:")) {
 				while(inputScan.hasNext()) {
-					phrase = phrase + encrypt(inputScan, 1) + " ";
+					phrase = phrase + basicEncrypt(inputScan, 1) + " ";
 				}
 			} else if(word.equalsIgnoreCase("decrypt:")) {
 				while(inputScan.hasNext()) {
-					phrase = phrase + decrypt(inputScan, 1) + " ";
+					phrase = phrase + basicDecrypt(inputScan, 1) + " ";
 				}
 			} else if(word.equalsIgnoreCase("myaffineencrypt:")) {
 				System.out.println(Arrays.toString(affineMap.newLMap));
@@ -142,7 +142,7 @@ public class McNallyEnigma {
 		}
 	}
 	
-	public static String encrypt(Scanner inputScan, int n) {
+	public static String basicEncrypt(Scanner inputScan, int n) {
 		encrypted = "";
 		word = inputScan.next();
 		for(int i = 0; i < word.length(); i++){
@@ -156,7 +156,7 @@ public class McNallyEnigma {
 		return encrypted;
 	}
 	
-	public static String decrypt(Scanner inputScan, int n) {
+	public static String basicDecrypt(Scanner inputScan, int n) {
 		decrypted = "";
 		word = inputScan.next();
 		for(int i = 0; i < word.length(); i++){

@@ -3,9 +3,10 @@
 //Enigma Project
 
 public class Rotor {
-	public static String rotorMap = "";
+	public String rotorMap = "";
 	public int rotorNumber = 0;
-	public static int[] rotorLetterMap = new int[26];
+	public int[] rotorLetterMap = new int[26];
+	public int rotorPosition = -1;
 	
 	public Rotor(int rotorNumber) {
 		setRotorMap(rotorNumber);
@@ -16,7 +17,7 @@ public class Rotor {
 		return Integer.toString(rotorNumber);
 	}
 	
-	public static void setRotorMap(int num) {
+	public void setRotorMap(int num) {
 		if(num == 1) {
 			rotorMap = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
 		} else if (num == 2) {
