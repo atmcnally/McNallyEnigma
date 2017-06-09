@@ -42,7 +42,7 @@ public class PhaseTwo {
 		leftRotor.rotorPosition = inputScan.next().toUpperCase().charAt(0) - 65;
 		middleRotor.rotorPosition = inputScan.next().toUpperCase().charAt(0) - 65;
 		rightRotor.rotorPosition = inputScan.next().toUpperCase().charAt(0) - 65;
-		//difference between the position and 
+		//gives index within regular a-z map of letter position, translates to number of shifts needed
 		System.out.println(leftRotor.rotorPosition + " " + middleRotor.rotorPosition + " " + rightRotor.rotorPosition);
 		
 		//plugboard settings
@@ -96,6 +96,10 @@ public class PhaseTwo {
 		
 		//SHOULD I CHANGE THESE CONVOLUTED CHANGING VARIABLES TO JUST OLD CHAR AND NEW CHAR THEN SWITCH AND END OF EACH ROTOR?
 		
+		//advance the right rotor forward 1
+		//if at end, loop back to start and kick next rotor
+		//check that middle and left don't need to be kicked
+		//double kicking??
 		rightRotor.rotorPosition++;
 		
 		if(rightRotor.rotorPosition == 26) {
@@ -110,39 +114,34 @@ public class PhaseTwo {
 		
 		char firstL = '-';
 		
-		for(int j = 0; j < rightRotor.rotorPosition; j++) {
-			firstL = rightRotor.rotorMap.charAt(0);
-			rightRotor.rotorMap = rightRotor.rotorMap.substring(1);
-			rightRotor.rotorMap += firstL;
-		}
+		//for(int j = 0; j < rightRotor.rotorPosition; j++) {
+		//	firstL = rightRotor.rotorMap.charAt(0);
+		//	rightRotor.rotorMap = rightRotor.rotorMap.substring(1);
+		//	rightRotor.rotorMap += firstL;
+		//}
 		System.out.println(rightRotor.rotorMap);
 		
-		for(int j = 0; j < middleRotor.rotorPosition; j++) {
-			firstL = middleRotor.rotorMap.charAt(0);
-			middleRotor.rotorMap = middleRotor.rotorMap.substring(1);
-			middleRotor.rotorMap += firstL;
-		}
+		//for(int j = 0; j < middleRotor.rotorPosition; j++) {
+		//	firstL = middleRotor.rotorMap.charAt(0);
+		//	middleRotor.rotorMap = middleRotor.rotorMap.substring(1);
+		//	middleRotor.rotorMap += firstL;
+		//}
 		System.out.println(middleRotor.rotorMap);
 		
-		for(int j = 0; j < leftRotor.rotorPosition; j++) {
-			firstL = leftRotor.rotorMap.charAt(0);
-			leftRotor.rotorMap = leftRotor.rotorMap.substring(1);
-			leftRotor.rotorMap += firstL;
-		}
+		//for(int j = 0; j < leftRotor.rotorPosition; j++) {
+		//	firstL = leftRotor.rotorMap.charAt(0);
+		//	leftRotor.rotorMap = leftRotor.rotorMap.substring(1);
+		//	leftRotor.rotorMap += firstL;
+		//}
 		System.out.println(leftRotor.rotorMap);
 		
-		//cool, now your rotors know what positions they should be at and are kicked if needed
+		//cool, now your rotors are at the positions they should be at and are kicked if needed
 		
 		for(int i = 0; i < word.length(); i++) {
-			
-			//advance the right rotor forward 1
-			//if at end, loop back to start and kick next rotor
-			//check that middle and left don't need to be kicked
-			//double kicking??
 		
 			//time to reset their alphabets
 			//shift the lettermap by however many positions
-			//for rotor 3, setting of a means that a char fed in with the ascii - 65 value of 0 matches to the char at the map's index of 0
+			//for rotor 3, setting of A means that a char fed in with the ascii - 65 value of 0 matches to the char at the map's index of 0
 			
 			//b is at index zero. with a position shift of 1 -so that the initial setting is b- the whole letter map is shifted back 1 value
 			//what was at index 1 goes to index 0
@@ -151,7 +150,7 @@ public class PhaseTwo {
 			
 			//do this the first time for the number of positions, then shift just once for each rotation
 			
-			//ONLY THE FIRST ROTOR ROTATES MOST OF THE TIME, ONLY ROTATE THE OTHERS IF THE IF STATEMENTS ABOVE APPLY
+			//ONLY THE FIRST ROTOR ROTATES MOST OF THE TIME, ONLY ROTATE THE OTHERS IF THE IF STATEMENTS ABOVE/BELOW APPLY
 			
 			if(i > 0) {
 				rightRotor.rotorPosition++;
@@ -161,33 +160,35 @@ public class PhaseTwo {
 					
 					if(middleRotor.rotorPosition == 25) {
 						middleRotor.rotorPosition = 0;
-						firstL = middleRotor.rotorMap.charAt(0);
-						middleRotor.rotorMap = middleRotor.rotorMap.substring(1);
-						middleRotor.rotorMap += firstL;
+			//			firstL = middleRotor.rotorMap.charAt(0);
+			//			middleRotor.rotorMap = middleRotor.rotorMap.substring(1);
+			//			middleRotor.rotorMap += firstL;
 						System.out.println(middleRotor.rotorMap);
 						
 						if(leftRotor.rotorPosition == 25) {
 							leftRotor.rotorPosition = 0;
-							firstL = leftRotor.rotorMap.charAt(0);
-							leftRotor.rotorMap = leftRotor.rotorMap.substring(1);
-							leftRotor.rotorMap += firstL;
+			//				firstL = leftRotor.rotorMap.charAt(0);
+			//				leftRotor.rotorMap = leftRotor.rotorMap.substring(1);
+			//				leftRotor.rotorMap += firstL;
 							System.out.println(leftRotor.rotorMap);
 						}
 					}
 				}
 				
-				firstL = rightRotor.rotorMap.charAt(0);
-				rightRotor.rotorMap = rightRotor.rotorMap.substring(1);
-				rightRotor.rotorMap += firstL;
-				System.out.println(rightRotor.rotorMap);
+			//	firstL = rightRotor.rotorMap.charAt(0);
+			//	rightRotor.rotorMap = rightRotor.rotorMap.substring(1);
+			//	rightRotor.rotorMap += firstL;
+			//	System.out.println(rightRotor.rotorMap);
 			}
 			
 			
 			System.out.println(leftRotor.rotorPosition + " " + middleRotor.rotorPosition + " " + rightRotor.rotorPosition);
 			
+			System.out.println(word.charAt(i));
+			char letter = steckerPair(word.charAt(i));
 			
 			//takes char at index i, gets ascii value
-			x = word.charAt(i) + rightRotor.rotorPosition;
+			x = letter + rightRotor.rotorPosition;
 			
 			System.out.println((char) x);
 			
@@ -199,20 +200,22 @@ public class PhaseTwo {
 			ch = rightRotor.rotorMap.charAt(ind);
 			System.out.println(ch);
 			
-			x = ch + 0;
-			ind = x - 65;
+			//x = ch + 0;
+			ind = ch - 65 - rightRotor.rotorPosition;
+			
+			if (ind > 25) {
+				ind = ind - 26;
+			}
 			
 			ch = middleRotor.rotorMap.charAt(ind);
 			System.out.println(ch);
 			
-			x = ch + 0;
-			ind = x - 65;
+			ind = ch - 65;
 			
 			ch = leftRotor.rotorMap.charAt(ind);
 			System.out.println(ch);
 			
-			x = ch + 0;
-			ind = x - 65;
+			ind = ch - 65;
 			//this is where it hits the reflector
 			//x is the int value (in ascii) of the char hitting the reflector
 			//find the char at that index
@@ -238,18 +241,35 @@ public class PhaseTwo {
 			ind = middleRotor.rotorMap.indexOf(ch);
 			//repeat this for the next two rotors
 			
-			ch = (char) (ind + 65);
+			ch = (char) (ind + 65 + rightRotor.rotorPosition);
 			System.out.println(ch);
 			
 			ind = rightRotor.rotorMap.indexOf(ch);
-			ch = (char) (ind + 65);
+			ch = (char) (ind + 65 - rightRotor.rotorPosition);
 			System.out.println(ch);
 			
-			//char x
-			l = ch;
+			l = steckerPair(ch);
+			
+			//l = ch;
 			encrypted += l;
 		}
 		return encrypted;
+	}
+	
+	public static char steckerPair(char letter) {
+
+		String l = letter + "";
+		for(int i = 0; i < plugboardSettings.size(); i++) {
+			if(plugboardSettings.get(i).contains(l)) {
+				if(plugboardSettings.get(i).indexOf(l) == 0) {
+					return (char) (plugboardSettings.get(i).charAt(plugboardSettings.get(i).indexOf(l) + 1));
+				} else {
+					return (char) (plugboardSettings.get(i).charAt(plugboardSettings.get(i).indexOf(l) - 1));
+				}
+			}
+		}
+		
+		return letter;
 	}
 	
 	
