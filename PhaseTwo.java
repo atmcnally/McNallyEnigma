@@ -194,6 +194,15 @@ public class PhaseTwo {
 			
 			//convert this char ascii value to an index in the standard alphabet map
 			ind = x - 65;
+			
+			if(ind < 0) {
+				ind = ind + 26;
+			}
+			
+			if (ind > 25) {
+				ind = ind - 26;
+			}
+			
 			System.out.println(ind);
 			
 			//get the char value of the rotorMap at that index ind
@@ -243,6 +252,21 @@ public class PhaseTwo {
 			ch = reflector.charAt(ind);
 			System.out.println(ch);
 			
+			//AFTER HERE
+			
+			//
+			ind = ind + leftRotor.rotorPosition;
+			
+			if(ind < 0) {
+				ind = ind + 26;
+			}
+			
+			if (ind > 25) {
+				ind = ind - 26;
+			}
+			//
+			
+			
 			//take that char ch and bounce it back into the leftRotor
 			//find that int within the rotor's lettermap
 			ind = leftRotor.rotorMap.indexOf(ch);
@@ -254,7 +278,9 @@ public class PhaseTwo {
 			//ind is storing the index of ch
 			//new ch is the char converted to the ascii value at index ind in the regular letter map
 			
-			ind = ind + 65 + leftRotor.rotorPosition;
+			//
+			
+			ind = ind + 65;
 			
 			//convert index to regular ascii value
 			ch = (char) (ind);
@@ -263,8 +289,18 @@ public class PhaseTwo {
 			//take this char and find it in the next rotor
 			ind = middleRotor.rotorMap.indexOf(ch);
 			//repeat this for the next two rotors
+
+			ind = ind - leftRotor.rotorPosition;
 			
-			ch = (char) (ind + 65 + rightRotor.rotorPosition);
+			if(ind < 0) {
+				ind = ind + 26;
+			}
+			
+			if (ind > 25) {
+				ind = ind - 26;
+			}
+			
+			ch = (char) (ind + 65);
 			System.out.println(ch);
 			
 			ind = rightRotor.rotorMap.indexOf(ch);
