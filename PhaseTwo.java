@@ -201,7 +201,11 @@ public class PhaseTwo {
 			System.out.println(ch);
 			
 			//x = ch + 0;
-			ind = ch - 65 - rightRotor.rotorPosition;
+			ind = ch - 65 - rightRotor.rotorPosition + middleRotor.rotorPosition;
+			
+			if(ind < 0) {
+				ind = ind + 26;
+			}
 			
 			if (ind > 25) {
 				ind = ind - 26;
@@ -210,12 +214,29 @@ public class PhaseTwo {
 			ch = middleRotor.rotorMap.charAt(ind);
 			System.out.println(ch);
 			
-			ind = ch - 65;
+			ind = ch - 65 - leftRotor.rotorPosition;
+			
+			if(ind < 0) {
+				ind = ind + 26;
+			}
+			
+			if (ind > 25) {
+				ind = ind - 26;
+			}
 			
 			ch = leftRotor.rotorMap.charAt(ind);
 			System.out.println(ch);
 			
-			ind = ch - 65;
+			ind = ch - 65 - middleRotor.rotorPosition + leftRotor.rotorPosition;
+			
+			if(ind < 0) {
+				ind = ind + 26;
+			}
+			
+			if (ind > 25) {
+				ind = ind - 26;
+			}
+			
 			//this is where it hits the reflector
 			//x is the int value (in ascii) of the char hitting the reflector
 			//find the char at that index
@@ -233,8 +254,10 @@ public class PhaseTwo {
 			//ind is storing the index of ch
 			//new ch is the char converted to the ascii value at index ind in the regular letter map
 			
+			ind = ind + 65 + leftRotor.rotorPosition;
+			
 			//convert index to regular ascii value
-			ch = (char) (ind + 65);
+			ch = (char) (ind);
 			System.out.println(ch);
 			
 			//take this char and find it in the next rotor
