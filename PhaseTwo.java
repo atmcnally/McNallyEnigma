@@ -112,6 +112,13 @@ public class PhaseTwo {
 			}
 		}
 		
+		if(rightRotor.rotorPosition == rightRotor.rotorKick) {
+			middleRotor.rotorPosition++;
+			if(middleRotor.rotorPosition == middleRotor.rotorKick) {
+				leftRotor.rotorPosition++;
+			}
+		}
+		
 		char firstL = '-';
 		
 		//for(int j = 0; j < rightRotor.rotorPosition; j++) {
