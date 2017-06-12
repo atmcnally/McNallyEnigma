@@ -188,7 +188,6 @@ public class PhaseTwo {
 			//	System.out.println(rightRotor.rotorMap);
 			}
 			
-			
 			System.out.println(leftRotor.rotorPosition + " " + middleRotor.rotorPosition + " " + rightRotor.rotorPosition);
 			
 			System.out.println(word.charAt(i));
@@ -230,7 +229,17 @@ public class PhaseTwo {
 			ch = middleRotor.rotorMap.charAt(ind);
 			System.out.println(ch);
 			
-			ind = ch - 65 - leftRotor.rotorPosition - middleRotor.rotorPosition;
+			ind = ch - 65 - middleRotor.rotorPosition;
+			
+			if(ind < 0) {
+				ind = ind + 26;
+			}
+			
+			if (ind > 25) {
+				ind = ind - 26;
+			}
+			
+			ind = ind - leftRotor.rotorPosition;
 			
 			if(ind < 0) {
 				ind = ind + 26;
