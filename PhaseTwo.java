@@ -239,7 +239,9 @@ public class PhaseTwo {
 				ind = ind - 26;
 			}
 			
-			ind = ind - leftRotor.rotorPosition;
+			//
+			
+			ind = ind + leftRotor.rotorPosition;
 			
 			if(ind < 0) {
 				ind = ind + 26;
@@ -252,7 +254,7 @@ public class PhaseTwo {
 			ch = leftRotor.rotorMap.charAt(ind);
 			System.out.println(ch);
 			
-			ind = ch - 65 + leftRotor.rotorPosition;
+			ind = ch - 65 - leftRotor.rotorPosition;
 			
 			if(ind < 0) {
 				ind = ind + 26;
@@ -271,22 +273,25 @@ public class PhaseTwo {
 			//AFTER HERE
 			
 			//
-			ind = ind + leftRotor.rotorPosition;
+			//ind = ind + leftRotor.rotorPosition;
 			
-			if(ind < 0) {
-				ind = ind + 26;
-			}
+			//if(ind < 0) {
+			//	ind = ind + 26;
+			//}
 			
-			if (ind > 25) {
-				ind = ind - 26;
-			}
+			//if (ind > 25) {
+			//	ind = ind - 26;
+			//}
+			
+			//ch = (char) (ind);
 			//
 			
 			
 			//take that char ch and bounce it back into the leftRotor
 			//find that int within the rotor's lettermap
 			ind = leftRotor.rotorMap.indexOf(ch);
-
+			System.out.println(ind);
+			
 			//find corresponding char for that index
 			//if the ch is t, then the index of it for rotor one is 11. 
 			//i want the index + 65, converted to char. that is the char to be fed into the next rotor
@@ -296,7 +301,7 @@ public class PhaseTwo {
 			
 			//
 			
-			ind = ind + 65;
+			ind = ind + 65 + leftRotor.rotorPosition;
 			
 			//convert index to regular ascii value
 			ch = (char) (ind);
