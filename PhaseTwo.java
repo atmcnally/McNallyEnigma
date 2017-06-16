@@ -120,7 +120,6 @@ public class PhaseTwo {
 		}
 
 		
-		
 		char firstL = '-';
 		
 		for(int j = 0; j < rightRotor.rotorPosition; j++) {
@@ -128,21 +127,19 @@ public class PhaseTwo {
 			rightRotor.rotorMap = rightRotor.rotorMap.substring(1);
 			rightRotor.rotorMap += firstL;
 		}
-		System.out.println(rightRotor.rotorMap);
 		
 		for(int j = 0; j < middleRotor.rotorPosition; j++) {
 			firstL = middleRotor.rotorMap.charAt(0);
 			middleRotor.rotorMap = middleRotor.rotorMap.substring(1);
 			middleRotor.rotorMap += firstL;
 		}
-		System.out.println(middleRotor.rotorMap);
 		
 		for(int j = 0; j < leftRotor.rotorPosition; j++) {
 			firstL = leftRotor.rotorMap.charAt(0);
 			leftRotor.rotorMap = leftRotor.rotorMap.substring(1);
 			leftRotor.rotorMap += firstL;
 		}
-		System.out.println(leftRotor.rotorMap);
+
 		
 		//cool, now your rotors are at the positions they should be at and are kicked if needed
 		
@@ -192,6 +189,12 @@ public class PhaseTwo {
 			
 			System.out.println(leftRotor.rotorPosition + " " + middleRotor.rotorPosition + " " + rightRotor.rotorPosition);
 			
+			
+			System.out.println("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+			System.out.println(leftRotor.rotorMap);
+			System.out.println(middleRotor.rotorMap);
+			System.out.println(rightRotor.rotorMap);
+			
 			System.out.println(word.charAt(i));
 			char letter = steckerPair(word.charAt(i));
 			
@@ -199,30 +202,22 @@ public class PhaseTwo {
 			//RIGHT HERE
 			//
 			
-			ch = rotateF(rightRotor, middleRotor, letter);
-			System.out.println("first");
+			ch = rotateF(rightRotor, middleRotor, letter, 1);
 			System.out.println(ch);
 			
-			ch = rotateF(middleRotor, leftRotor, ch);
-			System.out.println("second");
+			ch = rotateF(middleRotor, leftRotor, ch, 2);
 			System.out.println(ch);
 			ind = ch - 65;
 			
-			if(ind < 0) {
-				ind = ind + 26;
-			}
-			
-			if (ind > 25) {
-				ind = ind - 26;
-			}
+			ind = carry(ind);
 			
 			ch = reflector.charAt(ind);
 			System.out.println("reflected");
 			System.out.println(ch);
 			
-			ch = rotateB(rightRotor, middleRotor, letter);
+			ch = rotateB(leftRotor, middleRotor, ch, 1);		
 			System.out.println(ch);
-			ch = rotateB(middleRotor, leftRotor, ch);
+			ch = rotateB(middleRotor, rightRotor, ch, 2);
 			System.out.println(ch);
 			
 			//
@@ -252,33 +247,122 @@ public class PhaseTwo {
 	}
 	
 	
-	public static char rotateF(Rotor rRotor, Rotor lRotor, char letter) {
+	public static char rotateF(Rotor pRotor, Rotor nRotor, char letter, int n) {
+		//n is the number shift- first or second
+		System.out.println(letter);
+		System.out.print(pRotor.rotorNumber + " ");
+		System.out.println(nRotor.rotorNumber);
+		String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String pMap = pRotor.rotorMap;
+		String nMap = nRotor.rotorMap;
+		int ind = -1;
+		char ch = '-';
 		
-		String alpha = "ABCDEFGHIJKLMNOPQRSTUVQXYZ";
-		String rMap = rRotor.rotorMap;
-		String lMap = lRotor.rotorMap;
-		int ind = alpha.indexOf(letter);
-		char ch = rMap.charAt(ind);
-		System.out.println(ch);
-		ch = lMap.charAt(ind);
-		System.out.println(ch);
-		ind = rMap.indexOf(ch);
-		return alpha.charAt(ind);
+		if(n == 1) {
+		
+			ind = alpha.indexOf(letter);
+			//add shift
+			ind += pRotor.rotorPosition;
+			
+			ind = carry(ind);
+			
+			System.out.println(ind);
+			//subtract shift
+			ind -= pRotor.rotorPosition;
+			
+			ind = carry(ind);
+			
+			ch = pMap.charAt(ind);
+			
+			System.out.println(ch);
+			//get char at index of past ch
+			//so if ch is now B from III then I want the char at index B from II
+			//ind += nRotor.rotorPosition;
+			System.out.println(ind);
+		
+			ind = nMap.indexOf(ch);
+			ind = carry(ind);
+			//
+			ch = nMap.charAt(ind);
+			System.out.println(ch);
+			//ind = alpha.indexOf(ch);
+			ind -= nRotor.rotorPosition;
+			ind = carry(ind);
+			
+			ch = nMap.charAt(ind);
+			return ch;
+		
+		} else {
+			//index of letter
+			ind = alpha.indexOf(letter);
+			ind -= nRotor.rotorPosition;
+			ind = carry(ind);
+			//ch = alpha.charAt(ind);
+			
+			ind -= nRotor.rotorPosition;
+			ind = carry(ind);
+			
+			ch = nMap.charAt(ind);
+			System.out.println(ch);
+			
+			ind = ch - 65 - nRotor.rotorPosition;
+			ind = carry(ind);
+			ch = alpha.charAt(ind);
+			return ch;
+			
+		}
 	}	
 	
-public static char rotateB(Rotor rRotor, Rotor lRotor, char letter) {
+public static char rotateB(Rotor pRotor, Rotor nRotor, char letter, int n) {
+		//n is the number shift- first or second
+		System.out.println(letter);
+		String alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String pMap = pRotor.rotorMap;
+		String nMap = nRotor.rotorMap;
+		int ind = -1;
+		char ch = '-';
 		
-		String alpha = "ABCDEFGHIJKLMNOPQRSTUVQXYZ";
-		String rMap = rRotor.rotorMap;
-		String lMap = lRotor.rotorMap;
-		int ind = alpha.indexOf(letter);
-		char ch = lMap.charAt(ind);
-		ch = rMap.charAt(ind);
-		ind = lMap.indexOf(ch);
-		return alpha.charAt(ind);
+		if(n == 1) {
+			ind = alpha.indexOf(letter) + pRotor.rotorPosition;
+			ch = alpha.charAt(ind);
+			System.out.println(ch);
+			ind = pMap.indexOf(ch);
+			ind += pRotor.rotorPosition;
+			
+			ind = carry(ind);
+			
+			ch = alpha.charAt(ind);
+			System.out.println(ch);
+			ind = alpha.indexOf(ch) + pRotor.rotorPosition;
+			
+			ind = carry(ind);
+			
+			ch = alpha.charAt(ind);
+			
+			return ch;
+		} else {
+			ind = nMap.indexOf(letter);
+			ind += pRotor.rotorPosition;
+			
+			ch = alpha.charAt(ind);
+			
+			
+			return ch;
+		}
 	}	
 	
 	
+	public static int carry(int ind) {
+		if(ind < 0) {
+			ind = ind + 26;
+		}
+		
+		if (ind > 25) {
+			ind = ind - 26;
+		}
+		return ind;
+	}
+
 	public static int checkRotor(String word) {
 		if(word.equals("I")) {
 			return 1;
