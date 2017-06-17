@@ -266,26 +266,30 @@ public class PhaseTwo {
 			
 			ind = carry(ind);
 			
-			System.out.println(ind);
+			System.out.println((char)(ind + 65));
+			
+			ind -= pRotor.rotorPosition;
+			ind = carry(ind);
+			
+			ch = pMap.charAt(ind);
+			System.out.println(ch);
+			ind = alpha.indexOf(ch);
 			//subtract shift
 			ind -= pRotor.rotorPosition;
 			
 			ind = carry(ind);
-			
-			ch = pMap.charAt(ind);
-			
-			System.out.println(ch);
+		
 			//get char at index of past ch
 			//so if ch is now B from III then I want the char at index B from II
-			//ind += nRotor.rotorPosition;
-			System.out.println(ind);
+			ind += nRotor.rotorPosition;
+			//System.out.println(ind);
 		
-			ind = nMap.indexOf(ch);
+			//ind = nMap.indexOf(ch);
 			ind = carry(ind);
 			//
-			ch = nMap.charAt(ind);
-			System.out.println(ch);
-			//ind = alpha.indexOf(ch);
+			//ch = nMap.charAt(ind);
+			//System.out.println(ch);
+			ch = alpha.charAt(ind);
 			ind -= nRotor.rotorPosition;
 			ind = carry(ind);
 			
@@ -295,9 +299,13 @@ public class PhaseTwo {
 		} else {
 			//index of letter
 			ind = alpha.indexOf(letter);
-			ind -= nRotor.rotorPosition;
+			ind -= pRotor.rotorPosition;
 			ind = carry(ind);
-			//ch = alpha.charAt(ind);
+			ch = alpha.charAt(ind);
+			ind += nRotor.rotorPosition;
+			ind = carry(ind);
+			ch = alpha.charAt(ind);
+			System.out.println(ch);
 			
 			ind -= nRotor.rotorPosition;
 			ind = carry(ind);
@@ -323,7 +331,9 @@ public static char rotateB(Rotor pRotor, Rotor nRotor, char letter, int n) {
 		char ch = '-';
 		
 		if(n == 1) {
-			ind = alpha.indexOf(letter) + pRotor.rotorPosition;
+			ind = alpha.indexOf(letter);
+			ind += pRotor.rotorPosition;
+			ind = carry(ind);
 			ch = alpha.charAt(ind);
 			System.out.println(ch);
 			ind = pMap.indexOf(ch);
@@ -333,7 +343,7 @@ public static char rotateB(Rotor pRotor, Rotor nRotor, char letter, int n) {
 			
 			ch = alpha.charAt(ind);
 			System.out.println(ch);
-			ind = alpha.indexOf(ch) + pRotor.rotorPosition;
+			ind = alpha.indexOf(ch) + nRotor.rotorPosition;
 			
 			ind = carry(ind);
 			
@@ -341,12 +351,22 @@ public static char rotateB(Rotor pRotor, Rotor nRotor, char letter, int n) {
 			
 			return ch;
 		} else {
-			ind = nMap.indexOf(letter);
+			ind = pMap.indexOf(letter);
 			ind += pRotor.rotorPosition;
-			
+			ind = carry(ind);
 			ch = alpha.charAt(ind);
-			
-			
+			System.out.println(ch);
+			ind -= pRotor.rotorPosition;
+			ind = carry(ind);
+			ind += nRotor.rotorPosition;
+			ind = carry(ind);
+			ch = alpha.charAt(ind);
+			ind = nMap.indexOf(ch);
+			//ind += nRotor.rotorPosition;
+			//ind = carry(ind);
+			ch = alpha.charAt(ind);
+			//ind -= nRotor.rotorPosition;
+			//ch = alpha.charAt(ind);
 			return ch;
 		}
 	}	
