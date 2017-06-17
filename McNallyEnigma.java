@@ -223,7 +223,7 @@ public class McNallyEnigma {
 		return decrypted;
 	}
 	
-	
+	//my random code which is way more fun and interesting
 	public static String aaEncrypt(Scanner inputScan, AffineCipher affineMap) {
 		encrypted = "";
 		word = inputScan.next();

@@ -18,6 +18,7 @@ public class Rotor {
 		return Integer.toString(rotorNumber);
 	}
 	
+	//this sets the maps and attempts to implement doublestepping
 	public void setRotorMap(int num) {
 		if(num == 1) {
 			rotorMap = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
